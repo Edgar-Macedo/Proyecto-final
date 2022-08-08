@@ -1,0 +1,31 @@
+.container-page{
+    display: flex;
+}
+
+.container-page aside {
+    /* background-color: lightcoral; */
+    min-inline-size: 20%;
+    
+}
+
+.container-page .product-grid {
+    /* background-color: lightgreen; */
+    min-inline-size: 80%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13.75rem,1fr));
+}
+.item{
+    margin-top: 1rem;
+}
+.card-img{
+    block-size: 175px;
+    inline-size: 175px;
+} 
+
+.product-title{
+    max-block-size:2.375rem ;
+    max-inline-size:11.625rem ;
+    min-block-size:2.375rem ;
+    min-inline-size:11.625rem ;
+    overflow: hidden;
+}
