@@ -4,7 +4,6 @@ import { HashRouter, Routes, Route } from 'react-router-dom'
 import { Home, Login, ProductDetail, Purchases} from './pages'
 import { NavBar, Loading } from './components'
 import { Container } from 'react-bootstrap'
-import "/bootswatch/dist/lux/bootstrap.min.css";
 import './App.css'
 
 function App() {
