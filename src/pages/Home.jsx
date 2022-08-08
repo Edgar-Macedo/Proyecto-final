@@ -19,7 +19,7 @@ const Home = () => {
     const navigate = useNavigate()
     const products = useSelector(state => state.products.products)
 
-    const [searchValue, setSearchValue] = useState()
+    const [searchValue, setSearchValue] = useState("")
 
     useEffect(() => {
         dispatch(getProductsThunk())
