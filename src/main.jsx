@@ -1,4 +1,4 @@
-import 'bootswatch/dist/Lux/bootstrap.min.css';
+import 'bootswatch/dist/lux/bootstrap.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
