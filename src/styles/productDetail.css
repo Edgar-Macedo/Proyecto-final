@@ -1,0 +1,30 @@
+.product-detail{
+    margin-top: 1rem;
+    display: flex;
+}
+
+.product-detail-img{
+    width:  20rem;
+    margin-right: 2rem;
+}
+
+.product-detail-img img {
+    width:  20rem;
+    height: 20rem;
+    object-fit: scale-down;
+}
+
+.price{
+    display: flex;
+    margin-top: 1rem;
+}
+
+
+.price h2{
+    margin-right: 2rem;
+}
+
+
+.featured{
+    display: flex;
+}

@@ -9,6 +9,10 @@
 }
 
 .container-page .product-grid {
+    min-inline-size: 80%;
+}
+
+.container-page .product-grid {
     /* background-color: lightgreen; */
     min-inline-size: 80%;
     display: grid;
@@ -20,6 +24,7 @@
 .card-img{
     block-size: 175px;
     inline-size: 175px;
+    object-fit: scale-down;
 } 
 
 .product-title{
@@ -29,3 +34,4 @@
     min-inline-size:11.625rem ;
     overflow: hidden;
 }
+
