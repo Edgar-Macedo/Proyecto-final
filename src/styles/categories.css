@@ -1,0 +1,9 @@
+.categories-container{
+    margin-top: 1rem;
+    margin-right: 1rem;
+}
+
+.category-item:hover{
+    text-decoration: underline;
+    transition: color .2s;
+}

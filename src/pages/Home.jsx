@@ -1,16 +1,13 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { getProductsThunk, filterProductThunk } from '../store/slices/Products.slice';
-
+import { Categories } from '../components/index';
+import { getProductsThunk } from '../store/slices/Products.slice';
 import Card from 'react-bootstrap/Card';
-//import Search from '../components/Search';
-
 import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-import { useState } from 'react';
+import axios from 'axios';
+
 
 
 const Home = () => {
@@ -19,37 +16,22 @@ const Home = () => {
     const navigate = useNavigate()
     const products = useSelector(state => state.products.products)
 
-    const [searchValue, setSearchValue] = useState("")
+    const [categories, setCategories] = useState([])
 
     useEffect(() => {
         dispatch(getProductsThunk())
+        
+        axios.get('https://ecommerce-api-react.herokuapp.com/api/v1/products/categories')
+            .then(res => setCategories(res.data.data.categories))
     }, [])
-
-    // useEffect(() => {
-    //     dispatch(filterProductThunk(searchValue))
-    // },[searchValue])
-
-    console.log(searchValue)
+  
+    
+    console.log(categories)
 
     return (
         <div className='container-page'>
             <aside>
-                <h1>Home</h1>
-                <InputGroup size="sm" className="mb-3" >
-                    <Form.Control
-                        placeholder="Search"
-                        aria-label="Recipient's username"
-                        aria-describedby="basic-addon2"
-
-                        onChange={e => setSearchValue(e.target.value)}
-                        value={searchValue}
-                    />
-                    <Button variant="light" id="button-addon2"
-                        onClick={() => dispatch(filterProductThunk(searchValue))}>
-                        <i className="fa-solid fa-magnifying-glass"></i>
-                    </Button>
-                </InputGroup>
-
+                <Categories categories={categories}/>
             </aside>
             <div className='product-grid'>
                 {
