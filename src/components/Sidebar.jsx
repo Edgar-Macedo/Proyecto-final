@@ -4,7 +4,9 @@ import { useState } from 'react';
 import { Offcanvas, Button, ListGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom"
-import { getCartThunk } from '../store/slices/cart.slice';
+import { checkoutThunk, getCartThunk } from '../store/slices/cart.slice';
+import { removeFromCartThunk } from '../store/slices/cart.slice';
+
 
 const Sidebar = () => {
     const token = localStorage.getItem('token')
@@ -28,6 +30,10 @@ const Sidebar = () => {
 
     }, [])
 
+    const removeItem = (id) => {
+        dispatch(removeFromCartThunk(id))
+    }
+
     return (
         <div style={{ marginTop: "-.69rem" }}>
 
@@ -37,18 +43,22 @@ const Sidebar = () => {
 
             <Offcanvas show={show} onHide={handleClose} placement={"end"}>
                 <Offcanvas.Header closeButton>
-                    <Offcanvas.Title>My cart</Offcanvas.Title>
+                    <Offcanvas.Title>My cart <i className="fa-solid fa-cart-shopping"></i></Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                     <ListGroup variant='flush'>
                         {
-                            cartItems.cart.products.map(item => (
-                                <ListGroup.Item> <p style={{fontSize:".75rem"}}>{item.title}</p> </ListGroup.Item>
+                            cartItems.cart?.products.map(item => (
+                                <ListGroup.Item key={item.id}>
+                                    <div onClick={() => navigate(`/product/${item.id}`)} style={{fontSize:".75rem", cursor:"pointer"}}>
+                                       {item.title}
+                                    </div>
+                                    <button onClick={() => removeItem(item.id)}><i className="fa-solid fa-trash-can"></i></button>
+                                </ListGroup.Item>
                             ))
                         }
-            
                     </ListGroup>
-
+                    <Button onClick={() => dispatch(checkoutThunk())}>Checkout</Button>
 
                 </Offcanvas.Body>
             </Offcanvas>

@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import { getProductsThunk } from '../store/slices/Products.slice';
-import { Container, Badge, Button, Card } from 'react-bootstrap';
-import { Categories, Carousel } from '../components/index';
+import {Badge, Button, Card, ButtonGroup, InputGroup, Form } from 'react-bootstrap';
+import { Categories } from '../components/index';
 
 import axios from 'axios';
+import { addToCartThunk } from '../store/slices/cart.slice';
 
 
 
@@ -15,6 +16,7 @@ const ProductDetail = () => {
     const [productDetail, setProductDetail] = useState({})
     const [categories, setCategories] = useState([])
     const [sugestedProducts, setSugestedProducts] = useState([])
+    const [amount, setAmount] = useState(1)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -40,6 +42,15 @@ const ProductDetail = () => {
             .then(res => setCategories(res.data.data.categories))
     }, [])
 
+    const addItem = (amount) => {
+        const item = {
+            id:productDetail.id,
+            quantity:amount
+        }
+        setAmount(1)
+        dispatch(addToCartThunk(item))
+        console.log(item)
+    }
 
 
     return (
@@ -60,11 +71,29 @@ const ProductDetail = () => {
                         <Badge bg="dark">{productDetail?.status === "active" ? "Available" : "Out of stock"}</Badge>
                         <div className="price">
                             <h2>${productDetail?.price} </h2>
-                            <Button variant="primary">Add to cart</Button>
+                            <div style={{width:"10rem"}}>
+                                <InputGroup className="mb-3">
+                                    <Button onClick={() => setAmount(amount-1)} size="sm" variant="outline-secondary">-</Button>
+                                    <Form.Control 
+                                        size="sm" 
+                                        placeholder={amount}
+                                        value={amount}
+                                        onChange={e => setAmount(e.target.value)}/>
+                                    <Button onClick={() => setAmount(amount+1)} size="sm" variant="outline-secondary">+</Button>
+                                </InputGroup>
+                            </div>
+                            <Button  
+                                onClick={() => addItem(amount)} variant="primary" style={{ marginLeft: "1rem"}}>
+                                    Add to cart
+                            </Button>
                         </div>
                     </div>
                 </div>
                 <h4>In the same category:</h4>
+
+
+
+
                 <div className="featured">
                     {
                         sugestedProducts?.map(product => (
@@ -92,7 +121,6 @@ const ProductDetail = () => {
                     }
                 </div>
             </div>
-
         </div>
 
     );

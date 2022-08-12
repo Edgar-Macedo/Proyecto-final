@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { Categories } from '../components/index';
 import { getProductsThunk } from '../store/slices/Products.slice';
+import { addToCartThunk } from '../store/slices/cart.slice';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
@@ -25,7 +26,14 @@ const Home = () => {
             .then(res => setCategories(res.data.data.categories))
     }, [])
   
-    
+    const addItem = (id,amount) => {
+        const item = {
+            id:id,
+            quantity:amount
+        }
+
+        dispatch(addToCartThunk(item))
+    }
     
     console.log(categories)
 
@@ -40,10 +48,10 @@ const Home = () => {
                         <div
                             className="item"
                             key={product.id}
-                            onClick={() => navigate(`/product/${product.id}`)}>
+                            >
 
                             <Card style={{ width: '13.75rem' }}>
-                                <img src={product.productImgs?.[0]} alt="product-image" className='card-img' style={{ cursor: "pointer" }} />
+                                <img src={product.productImgs?.[0]} onClick={() => navigate(`/product/${product.id}`)} alt="product-image" className='card-img' style={{ cursor: "pointer" }} />
                                 {/* <Card.Img variant="top" src={product.productImgs?.[0]}/> */}
                                 <Card.Body >
                                     <h5 className='product-title'> {product.title} </h5>
@@ -52,7 +60,12 @@ const Home = () => {
                                         ${product.price}
                                     </Card.Text>
 
-                                    <Button variant="primary" size='sm' className='button-add-cart' >Add to cart</Button>
+                                    <Button 
+                                        variant="primary"
+                                        size='sm'
+                                        className='button-add-cart'
+                                        onClick={() => addItem(product.id,1)}
+                                        >Add to cart</Button>
                                 </Card.Body>
                                 <Card.Footer className="text-muted">{product.status == "active" ? "In stock" : "Out of stock"}</Card.Footer>
                             </Card>
